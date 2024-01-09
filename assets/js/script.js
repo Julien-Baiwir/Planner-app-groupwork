@@ -80,7 +80,7 @@ const addTask = () => {
               <button id="card__button__Change">modifier</button>
               <button id="card__button__Submit">commencer</button>
           </div>
-      `;
+      `; 
 
       newtasks.appendChild(taskDiv);
 
