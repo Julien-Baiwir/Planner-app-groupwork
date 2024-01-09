@@ -192,4 +192,30 @@ taskContainer.addEventListener("click", (event) => {
   }
 });
 
-// --------------
+// Function to handle "Modifier" button click event
+const handleModifyButtonClick = (event) => {
+  const card = event.target.closest(".card");
+  if (card) {
+    const taskId = card.getAttribute("data-task-id");
+    const titleElement = card.querySelector("#card__title");
+    const descriptionElement = card.querySelector("#card__description");
+    
+    // Get the title and description from the card
+    const title = titleElement.textContent;
+    const description = descriptionElement.textContent;
+    
+    // Set the values back to the input fields
+    newTaskInput.value = title;
+    descriptionInput.value = description;
+    
+    // Remove the card from the list
+    card.remove();
+  }
+};
+
+// Event delegation for "Modifier" button clicks within the task-container
+taskContainer.addEventListener("click", (event) => {
+  if (event.target && event.target.matches("#card__button__Change")) {
+    handleModifyButtonClick(event);
+  }
+});
