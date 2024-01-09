@@ -88,7 +88,7 @@ const addTask = () => {
        <h3 id="card__title">${newTask.title}</h3>
         <p id="card__description">${newTask.description}</p>
         <p id="card__duedate">A finir avant le: ${newTask.DueDate}</p>
-        <p id="card__daysleft">${daysLeft} restants</p>
+        <p id="card__daysleft">(il reste ${daysLeft} !)</p>
         
         <div id="card__button">
             <button id="card__button__Erase"> effacer</button>
