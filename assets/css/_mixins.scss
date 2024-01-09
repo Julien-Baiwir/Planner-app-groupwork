@@ -1,0 +1,30 @@
+// @include media-breakpoint {
+//    } 
+  
+// @mixin media-breakpoint { 
+//   @media (min-width: $newbreakpoint) {
+//     @content;
+//   }
+// }
+
+// ------ basic media ---------
+$mobile: 375px;
+$tablet: 670px;
+$desktop: 1400px;
+
+@mixin media-mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+@mixin media-tablet {
+  @media (min-width: $mobile + 1) {
+    @content;
+  }
+}
+@mixin media-desktop {
+  @media (min-width: $tablet + 1)  {
+    @content;
+  }
+}
+

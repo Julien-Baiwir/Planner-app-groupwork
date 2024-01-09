@@ -1,0 +1,227 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  color: #041a24;
+  height: 100vh;
+  background: linear-gradient(26deg, #4474b3, #fcfbfb);
+  justify-content: center;
+  font-family: "Salsa", cursive;
+  letter-spacing: 0.05em;
+  margin-left: 10px;
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.welcome {
+  text-align: center;
+  font-size: 200%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+@media (max-width: 375px) {
+  .app {
+    height: auto;
+  }
+}
+
+.input {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #faf7f7;
+  box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 375px) {
+  .input {
+    max-width: 320px;
+    height: 20vh;
+  }
+}
+
+.input > div {
+  margin-bottom: 1em;
+}
+
+.input input[type=text] {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 0.5em;
+}
+
+#add-btn {
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: #efecec;
+  color: #041a24;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+#add-btn:hover {
+  color: #5f5e5e;
+  transform: scale(1.03);
+  box-shadow: 0.05em 0.05em 0.05em rgba(0, 0, 0, 0.3);
+}
+
+.task-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 2em;
+  height: 100vh;
+  max-height: 60vh;
+  overflow-y: auto;
+  width: 100%;
+  padding-left: 20px;
+  margin-right: 20px;
+}
+@media (max-width: 375px) {
+  .task-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.column {
+  flex: 1;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
+  margin-bottom: 1em;
+  max-width: 350px;
+}
+
+.column h2 {
+  color: #041a24;
+  background-color: #66aee9;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 1em;
+  text-align: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 1px solid rgb(155, 155, 247);
+  background-color: rgb(231, 231, 238);
+  border-radius: 10px;
+  margin-bottom: 5px;
+  gap: 5px;
+}
+
+#card__title {
+  font-size: 200%;
+  background-image: url(../img/pastel.jpg);
+  background-size: cover;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  max-width: 350px;
+  width: 100%;
+  max-height: 50px;
+  height: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#card__button {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+/* styles.css (ou incluez ces styles dans votre fichier HTML) */
+#card__button__Erase {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(210, 140, 216)"><path d="M20 5h-9.586L8.707 3.293A.997.997 0 0 0 8 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-4 9H8v-2h8v2z"></path></svg>');
+  /* Autres styles pour le bouton */
+}
+
+#card__button__Change {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(107, 219, 112)"><path d="M12 16c1.671 0 3-1.331 3-3s-1.329-3-3-3-3 1.331-3 3 1.329 3 3 3z"></path><path d="M20.817 11.186a8.94 8.94 0 0 0-1.355-3.219 9.053 9.053 0 0 0-2.43-2.43 8.95 8.95 0 0 0-3.219-1.355 9.028 9.028 0 0 0-1.838-.18V2L8 5l3.975 3V6.002c.484-.002.968.044 1.435.14a6.961 6.961 0 0 1 2.502 1.053 7.005 7.005 0 0 1 1.892 1.892A6.967 6.967 0 0 1 19 13a7.032 7.032 0 0 1-.55 2.725 7.11 7.11 0 0 1-.644 1.188 7.2 7.2 0 0 1-.858 1.039 7.028 7.028 0 0 1-3.536 1.907 7.13 7.13 0 0 1-2.822 0 6.961 6.961 0 0 1-2.503-1.054 7.002 7.002 0 0 1-1.89-1.89A6.996 6.996 0 0 1 5 13H3a9.02 9.02 0 0 0 1.539 5.034 9.096 9.096 0 0 0 2.428 2.428A8.95 8.95 0 0 0 12 22a9.09 9.09 0 0 0 1.814-.183 9.014 9.014 0 0 0 3.218-1.355 8.886 8.886 0 0 0 1.331-1.099 9.228 9.228 0 0 0 1.1-1.332A8.952 8.952 0 0 0 21 13a9.09 9.09 0 0 0-.183-1.814z"></path></svg>');
+  /* Autres styles pour le bouton */
+}
+
+#card__button__Submit {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgb(118, 163, 221)"><path d="M4 22h12v-2H4V8H2v12c0 1.103.897 2 2 2z"></path><path d="M20 2H8c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm-2 9h-3v3h-2v-3h-3V9h3V6h2v3h3v2z"></path></svg>');
+  /* Autres styles pour le bouton */
+}
+
+.task {
+  background-color: #faf8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}/*# sourceMappingURL=style.css.map */
