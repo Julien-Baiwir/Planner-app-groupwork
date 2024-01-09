@@ -1,4 +1,4 @@
-import { format } from 'https://cdn.jsdelivr.net/npm/date-fns@2.24.0/esm/index.js';
+import { format , formatDistanceToNow } from 'https://cdn.jsdelivr.net/npm/date-fns@2.24.0/esm/index.js';
 import { fr } from 'https://cdn.jsdelivr.net/npm/date-fns@2.24.0/esm/locale/index.js';
 
 const updateTime = () => {
@@ -47,54 +47,69 @@ const addTask = () => {
   const title = newTaskInput.value.trim();
   const description = descriptionInput.value.trim();
   const inputDate = dueDateInput.value.trim(); // Get the input date value
+ 
+  // Validate title length and format
+ const isTitleValid = title.length >= 3 && title.length <= 256 && typeof title === 'string';
 
-  // Parse the input date value to create a Date object (assuming it's in the format dd/mm/yyyy)
+ // Validate description length and format
+ const isDescriptionValid = description.length === 0 || (description.length >= 5 && description.length <= 1024 && typeof description === 'string');
+  
+ // Parse the input date value to create a Date object (assuming it's in the format dd/mm/yyyy)
   const [day, month, year] = inputDate.split('/');
   const dueDate = new Date(`${year}-${month}-${day}`);
 
   if (
-    title !== "" &&
-    description !== "" &&
+    isTitleValid &&
+    isDescriptionValid &&
     !isNaN(dueDate.getTime()) && // Check if the parsed date is valid
     dueDate.getTime() > Date.now() // Check if the due date is in the future
   ) {
+    const now = new Date();
+    // Format the current date as CreationDate using French locale
+    
+    const formattedCreationDate = format(now, "EEEE d MMMM yyyy HH'h'mm", { locale: fr });
+
     const newTask = {
       title,
       description,
       DueDate: dueDate.toLocaleDateString(),
+      CreationDate: formattedCreationDate, // Add formatted CreationDate here
       id: generateUniqueID(),
       status: "To Do"
     };
+    const daysLeft = formatDistanceToNow(dueDate, { locale: fr });
 
-      const taskDiv = document.createElement("div");
-      taskDiv.classList.add("card");
-      taskDiv.setAttribute("data-task-id", newTask.id); // Set data-task-id attribute
+    const taskDiv = document.createElement("div");
+    taskDiv.classList.add("card");
+    taskDiv.setAttribute("data-task-id", newTask.id); // Set data-task-id attribute
 
-      taskDiv.innerHTML = 
-      `
-          <h3 id="card__title">${newTask.title}</h3>
-          <p id="card__description">${newTask.description}</p>
-          <p id="card__duedate">A finir avant le: ${newTask.DueDate}</p>
-          <div id="card__button">
-              <button id="card__button__Erase"> effacer</button>
-              <button id="card__button__Change">modifier</button>
-              <button id="card__button__Submit">commencer</button>
-          </div>
-      `; 
+    taskDiv.innerHTML = 
+    `
+       <h3 id="card__title">${newTask.title}</h3>
+        <p id="card__description">${newTask.description}</p>
+        <p id="card__duedate">A finir avant le: ${newTask.DueDate}</p>
+        <p id="card__daysleft">${daysLeft} restants</p>
+        
+        <div id="card__button">
+            <button id="card__button__Erase"> effacer</button>
+            <button id="card__button__Change">modifier</button>
+            <button id="card__button__Submit">commencer</button>
+        </div>
+    `; 
 
-      newtasks.appendChild(taskDiv);
+    newtasks.appendChild(taskDiv);
 
-      newTaskInput.value = "";
-      descriptionInput.value = "";
-      dueDateInput.value = "";
+    newTaskInput.value = "";
+    descriptionInput.value = "";
+    dueDateInput.value = "";
 
-      // Store the new task in local storage
-      let tasksFromStorage = JSON.parse(localStorage.getItem('tasks')) || [];
-      tasksFromStorage.push(newTask);
-      localStorage.setItem('tasks', JSON.stringify(tasksFromStorage));
+    // Store the new task in local storage
+    let tasksFromStorage = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasksFromStorage.push(newTask);
+    localStorage.setItem('tasks', JSON.stringify(tasksFromStorage));
 
   } else {
-      alert("Please provide a title, description, and a valid number of days for the task.");
+    alert("Veuillez ajouter :\n- un titre (minimum 3 caractères)\n- une description (minimum 5 caractères)\n- et une date valide");
   }
 };
 
