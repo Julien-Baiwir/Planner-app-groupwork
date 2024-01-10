@@ -202,10 +202,6 @@ const handleCompleteButtonClick = (event) => {
   }
 };
 
-
-
-
-
 // Event delegation for "Submit" button clicks within the task-container
 // taskContainer = document.querySelector(".task-container");
 taskContainer.addEventListener("click", (event) => {
