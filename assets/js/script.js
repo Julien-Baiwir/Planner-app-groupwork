@@ -24,6 +24,35 @@ const generateUniqueID = () => {
   const randomNum = Math.floor(Math.random() * 1000);
   return `${timestamp}-${randomNum}`;
 };
+// -------CREATE TASK CONTAINER------
+// Create task container
+const taskContainer = document.createElement("div");
+taskContainer.classList.add("task-container");
+
+// Create columns
+const newTasksColumn = document.createElement("div");
+newTasksColumn.classList.add("column");
+newTasksColumn.setAttribute("id", "new-tasks");
+newTasksColumn.innerHTML = "<h2>Nouvelles tâches</h2>";
+
+const tasksInProgressColumn = document.createElement("div");
+tasksInProgressColumn.classList.add("column");
+tasksInProgressColumn.setAttribute("id", "tasks-in-progress");
+tasksInProgressColumn.innerHTML = "<h2>Tâches en cours</h2>";
+
+const completedTasksColumn = document.createElement("div");
+completedTasksColumn.classList.add("column");
+completedTasksColumn.setAttribute("id", "completed-tasks");
+completedTasksColumn.innerHTML = "<h2>Tâches terminées</h2>";
+
+// Append columns to task container
+taskContainer.appendChild(newTasksColumn);
+taskContainer.appendChild(tasksInProgressColumn);
+taskContainer.appendChild(completedTasksColumn);
+
+// Append task container to the main app container
+const appContainer = document.querySelector(".app");
+appContainer.appendChild(taskContainer);
 
 // -------3 New task------
 let newTask = {
@@ -91,14 +120,14 @@ const addTask = () => {
         <p id="card__daysleft">(il reste ${daysLeft} !)</p>
         
         <div id="card__button">
-            <button id="card__button__Erase"> effacer</button>
-            <button id="card__button__Change">modifier</button>
-            <button id="card__button__Submit">commencer</button>
-        </div>
+        <img src="/assets/img/trash-2.svg" alt="trash" id="card__button__Erase" class="trash-icon">
+        <img src="/assets/img/edit.svg" alt="edit" id="card__button__Change" class="edit-icon">
+        <img src="/assets/img/check.svg" alt="check" id="card__button__Submit" class="check-icon">
+      </div>
     `; 
 
-    newtasks.appendChild(taskDiv);
-
+    // newtasks.appendChild(taskDiv);
+    newTasksColumn.appendChild(taskDiv);
     newTaskInput.value = "";
     descriptionInput.value = "";
     dueDateInput.value = "";
@@ -116,29 +145,24 @@ const addTask = () => {
 const addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", addTask);
 
-// ----------------
-// -----------
-
 // Function to move the card to "Tasks in Progress" using unique ID
 const moveTaskInProgressById = (taskId) => {
   const taskCard = document.querySelector(`.card[data-task-id="${taskId}"]`);
   if (taskCard) {
-    const tasksInProgressContainer = document.getElementById("tasks-in-progress");
-    tasksInProgressContainer.appendChild(taskCard);
-    // Change the text of the button to "terminer"
+    tasksInProgressColumn.appendChild(taskCard);
+    // Change the image source of the submit button to the 'check' icon
     const button = taskCard.querySelector("#card__button__Submit");
     if (button) {
-      button.textContent = "terminer";
+      button.src = "/assets/img/check.svg";
     }
   }
 };
 
-// Function to move the card to "Completed Tasks" and retain the "effacer" button
+// Function to move the card to "Completed Tasks" and retain the "erase" image button
 const moveTaskToCompleted = (taskId) => {
   const taskCard = document.querySelector(`.card[data-task-id="${taskId}"]`);
   if (taskCard) {
-    const completedTasksContainer = document.getElementById("completed-tasks");
-    completedTasksContainer.appendChild(taskCard);
+    completedTasksColumn.appendChild(taskCard);
 
     // Update the due date display for completed tasks
     const dueDateElement = taskCard.querySelector("#card__duedate");
@@ -148,19 +172,19 @@ const moveTaskToCompleted = (taskId) => {
       dueDateElement.textContent = `Terminée le ${dateValue}`; // Modify the text
     }
 
-    // Remove buttons except the "effacer" button from the card
+    // Remove all images except the "erase" image button from the card
     const buttonsDiv = taskCard.querySelector("#card__button");
     if (buttonsDiv) {
       const eraseButton = buttonsDiv.querySelector("#card__button__Erase");
       buttonsDiv.innerHTML = ''; // Remove all content within the buttons div
       if (eraseButton) {
-        buttonsDiv.appendChild(eraseButton); // Append the "effacer" button back
+        buttonsDiv.appendChild(eraseButton); // Append the "erase" button back
       }
     }
   }
 };
 
-// Function to handle "Submit" button click event for moving task to "Tasks in Progress"
+// Function to handle "Submit" image button click event for moving task to "Tasks in Progress"
 const handleInProgressButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
@@ -169,7 +193,7 @@ const handleInProgressButtonClick = (event) => {
   }
 };
 
-// Function to handle "Submit" button click event for moving task to "Completed Tasks"
+// Function to handle "Submit" image button click event for moving task to "Completed Tasks"
 const handleCompleteButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
@@ -178,8 +202,12 @@ const handleCompleteButtonClick = (event) => {
   }
 };
 
+
+
+
+
 // Event delegation for "Submit" button clicks within the task-container
-const taskContainer = document.querySelector(".task-container");
+// taskContainer = document.querySelector(".task-container");
 taskContainer.addEventListener("click", (event) => {
   if (event.target && event.target.matches("#card__button__Submit")) {
     const isInProgress = event.target.closest("#tasks-in-progress");
