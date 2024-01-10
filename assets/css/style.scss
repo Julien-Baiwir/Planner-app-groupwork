@@ -72,12 +72,12 @@ body {
     color: #041a24;
     font-size: 1em;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, color 0.3s;
+    transition: transform 0.1s, box-shadow 0.1s, color 0.3s;
 }
 
 #add-btn:hover {
-    color: #5f5e5e;
-    transform: scale(1.03);
+    color: #2b2a2a;
+    transform: scale(1.05);
     box-shadow: 0.05em 0.05em 0.05em rgba(0, 0, 0, 0.3);
 }
 
@@ -156,11 +156,43 @@ body {
 }
 
 // --------SWITCH MODE LISTE ----------
-.switch {
+.controls-container {
+    display: flex; 
+    align-items: center; 
+  }
+  
+  #tri-par-container {
+    margin-right: 20px; 
+  }
+  
+ 
+  #tri-par {
+    padding: 3px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #fff; 
+    outline: none; 
+    width: 150px; 
+  
+  }
+  
+  #tri-par option {
+    padding: 3px; 
+  }
+  
+  
+  #ListMode {
+    display: flex; 
+    align-items: center; 
+  }
+  
+  .switch {
     position: relative;
     display: inline-block;
     width: 40px;
     height: 20px;
+    margin-right: 10px; 
   }
   
   .switch input {
@@ -198,8 +230,9 @@ body {
   input:checked + .slider:before {
     transform: translateX(20px);
   }
+  
 
-// --------SWITCH MODE LISTE ----------
+// --------icons ----------
 .trash-icon,
 .edit-icon,
 .check-icon {
@@ -207,6 +240,7 @@ body {
   height: 20px; 
   padding-left: 8px;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .trash-icon:hover,

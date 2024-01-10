@@ -39,15 +39,24 @@
             </div>
         </div>
         <!-- MODE LISTE -->
-        <div id="ListMode">
+        <div class="controls-container"> 
+
+            <div id="tri-par-container">
+              <label for="tri-par">Trier par :</label>
+              <select id="tri-par" onchange="triFunction()">
+                <option value="urgence">Urgence</option>
+                <option value="date-fin">Date de fin</option>
+              </select>
+            </div>
+         
+          <div id="ListMode">
+            <span>Mode liste: </span>
             <label for="toggleMode" class="switch">
               <input type="checkbox" id="toggleMode">
               <span class="slider"></span>
             </label>
-            <span>Mode liste</span>
           </div>
-
-    </div>
+        <div>
 </body>
 
 </html>
