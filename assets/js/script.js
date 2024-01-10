@@ -145,6 +145,7 @@ const addTask = () => {
 const addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", addTask);
 
+
 // Function to move the card to "Tasks in Progress" using unique ID
 const moveTaskInProgressById = (taskId) => {
   const taskCard = document.querySelector(`.card[data-task-id="${taskId}"]`);
@@ -158,33 +159,33 @@ const moveTaskInProgressById = (taskId) => {
   }
 };
 
-// Function to move the card to "Completed Tasks" and retain the "erase" image button
+// move the card to "Completed Tasks" and retain the "erase" image button
 const moveTaskToCompleted = (taskId) => {
   const taskCard = document.querySelector(`.card[data-task-id="${taskId}"]`);
   if (taskCard) {
     completedTasksColumn.appendChild(taskCard);
 
-    // Update the due date display for completed tasks
+    
     const dueDateElement = taskCard.querySelector("#card__duedate");
     if (dueDateElement) {
       const dueDateText = dueDateElement.textContent;
-      const dateValue = dueDateText.split(': ')[1]; // Extract the date part
-      dueDateElement.textContent = `Terminée le ${dateValue}`; // Modify the text
+      const dateValue = dueDateText.split(': ')[1]; 
+      dueDateElement.textContent = `Terminée le ${dateValue}`; 
     }
 
-    // Remove all images except the "erase" image button from the card
+   
     const buttonsDiv = taskCard.querySelector("#card__button");
     if (buttonsDiv) {
       const eraseButton = buttonsDiv.querySelector("#card__button__Erase");
-      buttonsDiv.innerHTML = ''; // Remove all content within the buttons div
+      buttonsDiv.innerHTML = ''; 
       if (eraseButton) {
-        buttonsDiv.appendChild(eraseButton); // Append the "erase" button back
+        buttonsDiv.appendChild(eraseButton); 
       }
     }
   }
 };
 
-// Function to handle "Submit" image button click event for moving task to "Tasks in Progress"
+// "Submit" "Tasks in Progress"
 const handleInProgressButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
@@ -193,7 +194,7 @@ const handleInProgressButtonClick = (event) => {
   }
 };
 
-// Function to handle "Submit" image button click event for moving task to "Completed Tasks"
+// "Submit" moving task to "Completed Tasks"
 const handleCompleteButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
@@ -202,7 +203,7 @@ const handleCompleteButtonClick = (event) => {
   }
 };
 
-// Event delegation for "Submit" button clicks within the task-container
+// Event delegation  "Submit" the task-container
 // taskContainer = document.querySelector(".task-container");
 taskContainer.addEventListener("click", (event) => {
   if (event.target && event.target.matches("#card__button__Submit")) {
@@ -215,12 +216,14 @@ taskContainer.addEventListener("click", (event) => {
   }
 });
 
+
+
 // SUPRESS FUNCTION--------
 // Function to handle "Erase" button click event for removing the card
 const handleEraseButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
-    card.remove(); // Remove the entire card element
+    card.remove(); 
   }
 };
 

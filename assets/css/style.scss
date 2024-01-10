@@ -14,7 +14,7 @@ body {
     letter-spacing: 0.05em;
     margin-left: 10px;
     margin-right: 10px;
-    overflow: hidden;
+   
 }
 
 .welcome {
@@ -35,10 +35,12 @@ body {
     }
 }
 
+
 .input {
     width: 100%;
     max-width: 600px;
-    margin: 20px 0;
+    margin-top:10px;
+    margin-bottom:20px;
     padding: 20px;
     border-radius: 20px;
     background-color: #faf7f7;
@@ -80,36 +82,33 @@ body {
     transform: scale(1.05);
     box-shadow: 0.05em 0.05em 0.05em rgba(0, 0, 0, 0.3);
 }
-
+// -----task container----
 .task-container {
     display: flex;
-    justify-content: center;
-    gap: 50px;
+    justify-content: space-between; 
+    gap: 50px; 
     margin-top: 2em;
-    height: 100vh;
-    max-height: 60vh;
-    overflow-y: auto;
-    width: 100%;
-    padding-left: 20px;
-    margin-right: 20px;
-
-    @include media-mobile {
-        flex-direction: column;
-        gap:10px
-        
-    }
-}
-
-.column {
+    height: auto; 
+    flex-wrap: wrap; 
+  }
+  
+  .column {
     flex: 1;
     padding: 20px;
     border-radius: 20px;
     background-color: #f9f9f9;
     box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.2);
     margin-bottom: 1em;
-    max-width: 350px;
-
-}
+    min-width: 230px;
+    // max-width: calc(33.33% - 20px); /* Ensure 3 columns, considering spacing */
+    // /* Add necessary responsive adjustments */
+    @include media-tablet {
+      max-width: calc(50% - 20px); /* For tablet view, two columns */
+    }
+    @include media-mobile {
+      max-width: 100%; /* For mobile view, full width */
+    }
+  }
 
 .column h2 {
     color: #041a24;
