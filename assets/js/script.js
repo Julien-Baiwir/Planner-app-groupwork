@@ -229,3 +229,67 @@ taskContainer.addEventListener("click", (event) => {
 });
 
 // ------- TRI FUNCTION -----------
+const sortTasksByTitle = () => {
+  const allColumns = document.querySelectorAll('.column');
+
+  allColumns.forEach((column) => {
+    const tasksInColumn = Array.from(column.querySelectorAll('.card'));
+
+    tasksInColumn.sort((taskA, taskB) => {
+      const titleA = taskA.querySelector('#card__title').textContent.toLowerCase();
+      const titleB = taskB.querySelector('#card__title').textContent.toLowerCase();
+      if (titleA < titleB) return -1;
+      if (titleA > titleB) return 1;
+      return 0;
+    });
+
+    column.innerHTML = `<h2>${column.querySelector('h2').textContent}</h2>`;
+    
+    tasksInColumn.forEach((task) => {
+      column.appendChild(task);
+    });
+  });
+};
+
+// --------
+const sortTasksByDueDate = () => {
+  const allColumns = document.querySelectorAll('.column');
+
+  allColumns.forEach((column) => {
+    const tasksInColumn = Array.from(column.querySelectorAll('.card'));
+
+    tasksInColumn.sort((taskA, taskB) => {
+      const daysLeftAElement = taskA.querySelector('#card__daysleft');
+      const daysLeftBElement = taskB.querySelector('#card__daysleft');
+
+      if (daysLeftAElement && daysLeftBElement) {
+        const daysLeftA = parseInt(daysLeftAElement.textContent.split(' ')[2]); 
+        const daysLeftB = parseInt(daysLeftBElement.textContent.split(' ')[2]); 
+
+        return daysLeftA - daysLeftB;
+      }
+      
+      return 0;
+    });
+
+    column.innerHTML = `<h2>${column.querySelector('h2').textContent}</h2>`;
+    
+    tasksInColumn.forEach((task) => {
+      column.appendChild(task);
+    });
+  });
+};
+
+// --------
+const selectSort = document.getElementById('tri-par');
+
+const handleSortSelection = () => {
+  const selectedValue = selectSort.value;
+  if (selectedValue === 'titretache') {
+    sortTasksByTitle();
+  } else if (selectedValue === 'urgence') {
+    sortTasksByDueDate();
+  }
+};
+
+selectSort.addEventListener('change', handleSortSelection);
