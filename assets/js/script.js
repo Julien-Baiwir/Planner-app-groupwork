@@ -1,72 +1,61 @@
 import { format , formatDistanceToNow } from 'https://cdn.jsdelivr.net/npm/date-fns@2.24.0/esm/index.js';
 import { fr } from 'https://cdn.jsdelivr.net/npm/date-fns@2.24.0/esm/locale/index.js';
 
+// CREATE CURRENT TIME FOR USER
 const updateTime = () => {
   const timerDiv = document.getElementById('Timer');
   const now = new Date();
-
-  // Use French locale
   const formattedTime = format(now, "EEEE d MMMM yyyy HH'h'mm", { locale: fr });
-
   timerDiv.textContent = `${formattedTime}`;
 };
-
 updateTime();
 setInterval(updateTime, 1000);
 
-// ---------
+// CREATE INPUT USER
 let input_date = document.getElementById("dueDateInput");
 input_date.type = "date";
 
-// -------2 unique ID------
+// FUNCTION UNIQUE ID 
 const generateUniqueID = () => {
   const timestamp = new Date().getTime(); // timestamp
   const randomNum = Math.floor(Math.random() * 1000);
   return `${timestamp}-${randomNum}`;
 };
-// -------CREATE TASK CONTAINER------
-// Create task container
+// CREATE TASK CONTAINER
 const taskContainer = document.createElement("div");
 taskContainer.classList.add("task-container");
 
-// Create columns
+// CREATE COLUMS
 const newTasksColumn = document.createElement("div");
 newTasksColumn.classList.add("column");
 newTasksColumn.setAttribute("id", "new-tasks");
 newTasksColumn.innerHTML = "<h2>Nouvelles tâches</h2>";
-
 const tasksInProgressColumn = document.createElement("div");
 tasksInProgressColumn.classList.add("column");
 tasksInProgressColumn.setAttribute("id", "tasks-in-progress");
 tasksInProgressColumn.innerHTML = "<h2>Tâches en cours</h2>";
-
 const completedTasksColumn = document.createElement("div");
 completedTasksColumn.classList.add("column");
 completedTasksColumn.setAttribute("id", "completed-tasks");
 completedTasksColumn.innerHTML = "<h2>Tâches terminées</h2>";
-
-// Append columns to task container
 taskContainer.appendChild(newTasksColumn);
 taskContainer.appendChild(tasksInProgressColumn);
 taskContainer.appendChild(completedTasksColumn);
-
-// Append task container to the main app container
 const appContainer = document.querySelector(".app");
 appContainer.appendChild(taskContainer);
 
-// -------3 New task------
+// NEW TASK
 let newTask = {
   title: "",
   description: "",
   DueDate: new Date(),
-  // ------non visible------
+  // ------HIDDEN------
   CreationDate: "",
   id: generateUniqueID(),
   status: "", //("To Do", "In Progress", "Completed")
 };
 
-// -------4 Add task------
-
+// ADD TASK
 const newtasks = document.querySelector("#new-tasks");
 const newTaskInput = document.getElementById("input__newtask").querySelector("input");
 const descriptionInput = document.getElementById("input__descripttask").querySelector("input");
@@ -75,42 +64,32 @@ const dueDateInput = document.getElementById("input__datetask").querySelector("i
 const addTask = () => {
   const title = newTaskInput.value.trim();
   const description = descriptionInput.value.trim();
-  const inputDate = dueDateInput.value.trim(); // Get the input date value
- 
-  // Validate title length and format
- const isTitleValid = title.length >= 3 && title.length <= 256 && typeof title === 'string';
-
- // Validate description length and format
- const isDescriptionValid = description.length === 0 || (description.length >= 5 && description.length <= 1024 && typeof description === 'string');
-  
- // Parse the input date value to create a Date object (assuming it's in the format dd/mm/yyyy)
+  const inputDate = dueDateInput.value.trim(); 
+  const isTitleValid = title.length >= 3 && title.length <= 256 && typeof title === 'string';
+  const isDescriptionValid = description.length === 0 || (description.length >= 5 && description.length <= 1024 && typeof description === 'string');
   const [day, month, year] = inputDate.split('/');
   const dueDate = new Date(`${year}-${month}-${day}`);
-
   if (
     isTitleValid &&
     isDescriptionValid &&
-    !isNaN(dueDate.getTime()) && // Check if the parsed date is valid
-    dueDate.getTime() > Date.now() // Check if the due date is in the future
+    !isNaN(dueDate.getTime()) && 
+    dueDate.getTime() > Date.now() 
   ) {
-    const now = new Date();
-    // Format the current date as CreationDate using French locale
-    
+    const now = new Date();  
     const formattedCreationDate = format(now, "EEEE d MMMM yyyy HH'h'mm", { locale: fr });
 
     const newTask = {
       title,
       description,
       DueDate: dueDate.toLocaleDateString(),
-      CreationDate: formattedCreationDate, // Add formatted CreationDate here
+      CreationDate: formattedCreationDate,
       id: generateUniqueID(),
       status: "To Do"
     };
     const daysLeft = formatDistanceToNow(dueDate, { locale: fr });
-
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("card");
-    taskDiv.setAttribute("data-task-id", newTask.id); // Set data-task-id attribute
+    taskDiv.setAttribute("data-task-id", newTask.id); 
 
     taskDiv.innerHTML = 
     `
@@ -125,18 +104,14 @@ const addTask = () => {
         <img src="/assets/img/check.svg" alt="check" id="card__button__Submit" class="check-icon">
       </div>
     `; 
-
-    // newtasks.appendChild(taskDiv);
     newTasksColumn.appendChild(taskDiv);
     newTaskInput.value = "";
     descriptionInput.value = "";
     dueDateInput.value = "";
-
-    // Store the new task in local storage
+    // STORAGE
     let tasksFromStorage = JSON.parse(localStorage.getItem('tasks')) || [];
     tasksFromStorage.push(newTask);
     localStorage.setItem('tasks', JSON.stringify(tasksFromStorage));
-
   } else {
     alert("Veuillez ajouter :\n- un titre (minimum 3 caractères)\n- une description (minimum 5 caractères)\n- et une date valide");
   }
@@ -146,12 +121,12 @@ const addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", addTask);
 
 
-// Function to move the card to "Tasks in Progress" using unique ID
+// "Tasks in Progress" 
 const moveTaskInProgressById = (taskId) => {
   const taskCard = document.querySelector(`.card[data-task-id="${taskId}"]`);
   if (taskCard) {
     tasksInProgressColumn.appendChild(taskCard);
-    // Change the image source of the submit button to the 'check' icon
+    updateTaskStatus(taskId, "In Progress");
     const button = taskCard.querySelector("#card__button__Submit");
     if (button) {
       button.src = "/assets/img/check.svg";
@@ -159,12 +134,11 @@ const moveTaskInProgressById = (taskId) => {
   }
 };
 
-// move the card to "Completed Tasks" and retain the "erase" image button
+// "Completed" 
 const moveTaskToCompleted = (taskId) => {
   const taskCard = document.querySelector(`.card[data-task-id="${taskId}"]`);
   if (taskCard) {
     completedTasksColumn.appendChild(taskCard);
-
     
     const dueDateElement = taskCard.querySelector("#card__duedate");
     if (dueDateElement) {
@@ -173,7 +147,10 @@ const moveTaskToCompleted = (taskId) => {
       dueDateElement.textContent = `Terminée le ${dateValue}`; 
     }
 
-   
+const daysLeftElement = taskCard.querySelector("#card__daysleft");
+if (daysLeftElement) {
+  daysLeftElement.remove();
+}
     const buttonsDiv = taskCard.querySelector("#card__button");
     if (buttonsDiv) {
       const eraseButton = buttonsDiv.querySelector("#card__button__Erase");
@@ -182,10 +159,17 @@ const moveTaskToCompleted = (taskId) => {
         buttonsDiv.appendChild(eraseButton); 
       }
     }
+    updateTaskStatus(taskId, "Completed");
   }
 };
-
-// "Submit" "Tasks in Progress"
+const updateTaskStatus = (taskId, status) => {
+  let tasksFromStorage = JSON.parse(localStorage.getItem('tasks')) || [];
+  const taskToUpdate = tasksFromStorage.find(task => task.id === taskId);
+  if (taskToUpdate) {
+    taskToUpdate.status = status;
+    localStorage.setItem('tasks', JSON.stringify(tasksFromStorage));
+  }
+};
 const handleInProgressButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
@@ -193,8 +177,6 @@ const handleInProgressButtonClick = (event) => {
     moveTaskInProgressById(taskId);
   }
 };
-
-// "Submit" moving task to "Completed Tasks"
 const handleCompleteButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
@@ -202,62 +184,48 @@ const handleCompleteButtonClick = (event) => {
     moveTaskToCompleted(taskId);
   }
 };
-
-// Event delegation  "Submit" the task-container
-// taskContainer = document.querySelector(".task-container");
 taskContainer.addEventListener("click", (event) => {
   if (event.target && event.target.matches("#card__button__Submit")) {
     const isInProgress = event.target.closest("#tasks-in-progress");
     if (isInProgress) {
-      handleCompleteButtonClick(event); // Task in Progress
+      handleCompleteButtonClick(event); 
     } else {
-      handleInProgressButtonClick(event); // Completed Task
+      handleInProgressButtonClick(event); 
     }
   }
 });
 
 
-
 // SUPRESS FUNCTION--------
-// Function to handle "Erase" button click event for removing the card
 const handleEraseButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
     card.remove(); 
   }
 };
-
-// Event delegation for "Erase" button clicks within the task-container
 taskContainer.addEventListener("click", (event) => {
   if (event.target && event.target.matches("#card__button__Erase")) {
     handleEraseButtonClick(event);
   }
 });
 
-// Function to handle "Modifier" button click event
 const handleModifyButtonClick = (event) => {
   const card = event.target.closest(".card");
   if (card) {
     const taskId = card.getAttribute("data-task-id");
     const titleElement = card.querySelector("#card__title");
     const descriptionElement = card.querySelector("#card__description");
-    
-    // Get the title and description from the card
     const title = titleElement.textContent;
     const description = descriptionElement.textContent;
-    
-    // Set the values back to the input fields
     newTaskInput.value = title;
     descriptionInput.value = description;
-    
-    // Remove the card from the list
     card.remove();
   }
 };
-
-// Event delegation for "Modifier" button clicks within the task-container
 taskContainer.addEventListener("click", (event) => {
   if (event.target && event.target.matches("#card__button__Change")) {
     handleModifyButtonClick(event);
   }
 });
+
+// ------- TRI FUNCTION -----------
