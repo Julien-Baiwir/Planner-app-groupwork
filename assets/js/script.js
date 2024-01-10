@@ -97,7 +97,7 @@ const addTask = () => {
         <p id="card__description">${newTask.description}</p>
         <p id="card__duedate">A finir avant le: ${newTask.DueDate}</p>
         <p id="card__daysleft">(il reste ${daysLeft} !)</p>
-        
+        <p id="card__creationdate>${formattedCreationDate}</p>
         <div id="card__button">
         <img src="/assets/img/trash-2.svg" alt="trash" id="card__button__Erase" class="trash-icon">
         <img src="/assets/img/edit.svg" alt="edit" id="card__button__Change" class="edit-icon">
@@ -279,6 +279,8 @@ const sortTasksByDueDate = () => {
     });
   });
 };
+
+// --------
 
 // --------
 const selectSort = document.getElementById('tri-par');
