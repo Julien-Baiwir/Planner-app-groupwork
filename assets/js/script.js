@@ -251,7 +251,7 @@ const sortTasksByTitle = () => {
   });
 };
 
-// --------
+// ------SORTFUNCTION--
 const sortTasksByDueDate = () => {
   const allColumns = document.querySelectorAll('.column');
 
