@@ -99,9 +99,9 @@ const addTask = () => {
         <p id="card__daysleft">(il reste ${daysLeft} !)</p>
         <p id="card__creationdate>${formattedCreationDate}</p>
         <div id="card__button">
-        <img src="../assets/img/trash-2.svg" alt="trash" id="card__button__Erase" class="trash-icon">
-        <img src="../assets/img/edit.svg" alt="edit" id="card__button__Change" class="edit-icon">
-        <img src="../assets/img/check.svg" alt="check" id="card__button__Submit" class="check-icon">
+        <img src="./assets/img/trash-2.svg" alt="trash" id="card__button__Erase" class="trash-icon">
+        <img src="./assets/img/edit.svg" alt="edit" id="card__button__Change" class="edit-icon">
+        <img src="./assets/img/check.svg" alt="check" id="card__button__Submit" class="check-icon">
       </div>
     `; 
     newTasksColumn.appendChild(taskDiv);
